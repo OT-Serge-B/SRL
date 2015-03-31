@@ -1,0 +1,15 @@
+c:\users\sbaglyuk\documents\visual studio 2013\Projects\OnTargetAutomation\OnTargetAutomation\bin\Debug\OnTargetAutomation.pdb
+c:\users\sbaglyuk\documents\visual studio 2013\Projects\OnTargetAutomation\OnTargetAutomation\bin\Debug\WebDriver.dll
+c:\users\sbaglyuk\documents\visual studio 2013\Projects\OnTargetAutomation\OnTargetAutomation\bin\Debug\WebDriver.Support.dll
+c:\users\sbaglyuk\documents\visual studio 2013\Projects\OnTargetAutomation\OnTargetAutomation\bin\Debug\WebDriver.xml
+c:\users\sbaglyuk\documents\visual studio 2013\Projects\OnTargetAutomation\OnTargetAutomation\bin\Debug\WebDriver.Support.xml
+c:\users\sbaglyuk\documents\visual studio 2013\Projects\OnTargetAutomation\OnTargetAutomation\obj\Debug\OnTargetAutomation.pdb
+c:\users\sbaglyuk\documents\visual studio 2013\Projects\OnTargetAutomation\OnTargetAutomation\bin\Debug\OnTargetAutomation.dll.config
+c:\users\sbaglyuk\documents\visual studio 2013\Projects\OnTargetAutomation\OnTargetAutomation\bin\Debug\OnTargetAutomation.dll
+c:\users\sbaglyuk\documents\visual studio 2013\Projects\OnTargetAutomation\OnTargetAutomation\bin\Debug\nunit.framework.dll
+c:\users\sbaglyuk\documents\visual studio 2013\Projects\OnTargetAutomation\OnTargetAutomation\bin\Debug\nunit.framework.xml
+c:\users\sbaglyuk\documents\visual studio 2013\Projects\OnTargetAutomation\OnTargetAutomation\obj\Debug\OnTargetAutomation.dll
+C:\Users\sbaglyuk\Documents\Visual Studio 2013\Projects\OnTargetAutomation\OnTargetAutomation\bin\Debug\Resources\Data.xml
+C:\Users\sbaglyuk\Documents\Visual Studio 2013\Projects\OnTargetAutomation\OnTargetAutomation\bin\Debug\Resources\Settings.xml
+C:\Users\sbaglyuk\Documents\Visual Studio 2013\Projects\OnTargetAutomation\OnTargetAutomation\obj\Debug\OnTargetAutomation.Properties.Resources.resources
+C:\Users\sbaglyuk\Documents\Visual Studio 2013\Projects\OnTargetAutomation\OnTargetAutomation\obj\Debug\OnTargetAutomation.csproj.GenerateResource.Cache

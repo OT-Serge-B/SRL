@@ -1,0 +1,8 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<TestUserLogin>
+  <UserName>ed</UserName>
+  <Password>test</Password>
+  <UserFirstName>ED</UserFirstName>
+  <UserLastName>AGENT</UserLastName>
+  <Channel>PPGA</Channel>
+ </TestUserLogin>
