@@ -70,12 +70,14 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="PO\LifePortraits.cs" />
+    <Compile Include="PO\HomePage.cs" />
+    <Compile Include="PO\CreateApplication.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <Compile Include="UI\ComboBox.cs" />
     <Compile Include="WebDriverFacory.cs" />
     <Compile Include="PO\LoginPage.cs" />
     <Compile Include="Tests.cs" />

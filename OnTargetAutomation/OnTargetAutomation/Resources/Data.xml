@@ -1,8 +1,25 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<TestUserLogin>
-  <UserName>ed</UserName>
-  <Password>test</Password>
-  <UserFirstName>ED</UserFirstName>
-  <UserLastName>AGENT</UserLastName>
-  <Channel>PPGA</Channel>
- </TestUserLogin>
+<TestData>
+  <TestUserLogin>
+    <UserName>ed</UserName>
+    <Password>test</Password>
+    <UserFirstName>ED</UserFirstName>
+    <UserLastName>AGENT</UserLastName>
+    <Channel>PPGA</Channel>
+    <ClientFirstName></ClientFirstName>
+    <ClientLastName></ClientLastName>
+    <ClientDateBirth></ClientDateBirth>
+    <ClientSex></ClientSex>
+   </TestUserLogin>
+  <CompleteApplicationForEmprtyPaymentInformation>
+    <UserName>ed</UserName>
+    <Password>test</Password>
+    <UserFirstName>ED</UserFirstName>
+    <UserLastName>AGENT</UserLastName>
+    <Channel>PPGA</Channel>
+    <ClientFirstName>autotestClientFName</ClientFirstName>
+    <ClientLastName>autotestClientLName</ClientLastName>
+    <ClientDateBirth>12/11/1980</ClientDateBirth>
+    <ClientSex>Female</ClientSex>
+  </CompleteApplicationForEmprtyPaymentInformation>
+</TestData>

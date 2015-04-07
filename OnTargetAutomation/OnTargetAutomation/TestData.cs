@@ -35,6 +35,10 @@ namespace OnTargetAutomation
         public string UserLastName;
         public string Channel;
         public string UserFirstName;
+        public string ClientFirstName;
+        public string ClientLastName;
+        public string ClientDateBirth;
+        public string ClientSex;
 
         public TestData(string testName)
         {
@@ -43,6 +47,10 @@ namespace OnTargetAutomation
             this.UserFirstName = GetData.getData(testName, "UserFirstName");
             this.UserLastName = GetData.getData(testName, "UserLastName");
             this.Channel = GetData.getData(testName, "Channel");
+            this.ClientFirstName = GetData.getData(testName, "ClientFirstName");
+            this.ClientLastName = GetData.getData(testName, "ClientLastName");
+            this.ClientDateBirth = GetData.getData(testName, "ClientDateBirth");
+            this.ClientSex = GetData.getData(testName, "ClientSex");
         }
     }
 
