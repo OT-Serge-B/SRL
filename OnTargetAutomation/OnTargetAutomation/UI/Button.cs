@@ -5,9 +5,9 @@ namespace OnTargetAutomation
 {
     public class Button
     {
-        public static void ClickButton(IWebDriver driver, By by)
+        public static void ClickButton(By by)
         {
-            driver.FindElement(by).Click();
+            Test.driver.FindElement(by).Click();
         }
     }
 }

@@ -11,6 +11,8 @@ namespace OnTargetAutomation
         /// settings block
         /// </summary>
         public string Environment;
+        public string BrowserName;
+
         //public bool   MaximizedWnd;
         //public bool   BrowserFF;
         //public bool   BrowserChrome;
@@ -21,7 +23,7 @@ namespace OnTargetAutomation
         public TestSettings() {
             this.Environment = GetData.getSettings("Environment");
             //this.MaximizedWnd = GetData.getSettings("MaximizedWnd").Equals(true);
-            //this.BrowserFF = GetData.getSettings("BrowserFF").Equals(true);
+            this.BrowserName = GetData.getSettings("BrowserName");
             //this.BrowserChrome = GetData.getSettings("BrowserChrome").Equals(true);
             //this.BrowserIE = GetData.getSettings("BrowserIE").Equals(true);
             //this.ImplicitlyWait = int.Parse(GetData.getSettings("ImplicitlyWait"));

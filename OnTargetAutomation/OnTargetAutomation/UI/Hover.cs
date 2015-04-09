@@ -6,10 +6,10 @@ namespace OnTargetAutomation
 {
     public class Hover
     {
-        public static void hoverOverElement(IWebDriver driver, By by)
+        public static void hoverOverElement(By by)
         {
-            Actions builder = new Actions(driver);
-            builder.MoveToElement(driver.FindElement(by)).Perform();
+            Actions builder = new Actions(Test.driver);
+            builder.MoveToElement(Test.driver.FindElement(by)).Perform();
         }
     }
 }

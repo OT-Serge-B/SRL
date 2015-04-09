@@ -78,6 +78,7 @@
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
     <Compile Include="UI\ComboBox.cs" />
+    <Compile Include="UI\Label.cs" />
     <Compile Include="WebDriverFacory.cs" />
     <Compile Include="PO\LoginPage.cs" />
     <Compile Include="Tests.cs" />

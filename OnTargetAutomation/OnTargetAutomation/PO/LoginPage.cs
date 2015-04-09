@@ -11,12 +11,11 @@ namespace OnTargetAutomation.PO
         By txtLogin = By.Id("userName");
         By txtPassword = By.Id("pwd");
         By btnLogin = By.Id("btnLogin_label");
-        private IWebDriver driver;
-        public LoginPage(IWebDriver drv)
+
+        public LoginPage()
         {
-            this.driver = drv;
-            IWait<IWebDriver> wait = new WebDriverWait(driver, TimeSpan.FromSeconds(30.00));
-            wait.Until(_driver => ((IJavaScriptExecutor)driver).ExecuteScript("return document.readyState").Equals("complete"));
+            IWait<IWebDriver> wait = new WebDriverWait(Test.driver, TimeSpan.FromSeconds(30.00));
+            wait.Until(_driver => ((IJavaScriptExecutor)Test.driver).ExecuteScript("return document.readyState").Equals("complete"));
             wait.Until(ExpectedConditions.ElementIsVisible(txtLogin));
             wait.Until(ExpectedConditions.ElementIsVisible(txtPassword));
             wait.Until(ExpectedConditions.ElementIsVisible(btnLogin));
@@ -24,14 +23,14 @@ namespace OnTargetAutomation.PO
 
         public void Login(string username, string password)
         {
-            TextBox.SetTextInTextBox(driver, txtLogin, username);
-            TextBox.SetTextInTextBox(driver, txtPassword, password);
-            Button.ClickButton(driver, btnLogin);
+            TextBox.SetTextInTextBox(txtLogin, username);
+            TextBox.SetTextInTextBox(txtPassword, password);
+            Button.ClickButton(btnLogin);
         }
 
         public bool ValidatePageURL(TestSettings settings)
         {
-            return driver.Url.Contains(settings.Environment.Substring(0, settings.Environment.Length-2));
+            return Test.driver.Url.Contains(settings.Environment.Substring(0, settings.Environment.Length - 2));
         }
     }
 }

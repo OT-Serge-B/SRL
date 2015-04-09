@@ -5,7 +5,7 @@ using OpenQA.Selenium.Firefox;
 using OpenQA.Selenium.IE;
 using OpenQA.Selenium.Remote;
 
-namespace OnTargetAutomation.Driver
+namespace OnTargetAutomation
 {
     public class WebDriverFacory
     {
@@ -60,11 +60,11 @@ namespace OnTargetAutomation.Driver
             //else - use already existing driver instance
             return driver;
         }
-
         public static IWebDriver getDriver(DesiredCapabilities capabilities)
         {
             return getDriver(defaultHub, capabilities);
         }
+        
         private static IWebDriver newWebDriver(string hub, DesiredCapabilities capabilities)
         {
             driver = (hub == null)
@@ -74,7 +74,6 @@ namespace OnTargetAutomation.Driver
             count = 0;
             return driver;
         }
-
         private static IWebDriver createRemoteDriver(string hub, DesiredCapabilities capabilities)
         {
             try
@@ -87,22 +86,21 @@ namespace OnTargetAutomation.Driver
                 throw new Exception("Unable to connect to new WebDriver hub");
             }
         }
-
         private static IWebDriver createLocalDriver(DesiredCapabilities capabilities)
         {
             string browser = capabilities.BrowserName;
             if (browser.Equals("firefox"))
-                return new FirefoxDriver(capabilities);
-            //else if (browser.Equals("internet explorer"))
-            //    return new InternetExplorerDriver(new DesiredCapabilities().)
-            //if (browser.Equals("chrome"))
-            //    return new ChromeDriver(capabilities);
+                return new FirefoxDriver();
+            else if (browser.Equals("internet explorer"))
+                return new InternetExplorerDriver();
+            if (browser.Equals("chrome"))
+                return new ChromeDriver();
             else
                 throw new Exception("Unrecognized browser: " + browser);
 
         }
 
-        private static void dismissDriver()
+        public static void dismissDriver()
         {
             //try to quit
             if (driver != null) {

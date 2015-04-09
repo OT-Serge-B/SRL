@@ -5,10 +5,10 @@ namespace OnTargetAutomation
 {
     public class CheckBox
     {
-        public static void setCheckBox(IWebDriver driver, By by, bool state)
+        public static void setCheckBox(By by, bool state)
         {
-            if (driver.FindElement(by).Selected != state)
-                driver.FindElement(by).Click();
+            if (Test.driver.FindElement(by).Selected != state)
+                Test.driver.FindElement(by).Click();
         }
     }
 }

@@ -31,17 +31,17 @@ namespace OnTargetAutomation.PO
 
         public bool ValidateUserFirstName(string firstName)
         {
-            return Link.getLinkText(driver, this.labelUserFirstName).Equals(firstName);
+            return Link.getLinkText(this.labelUserFirstName).Equals(firstName);
         }
 
         public bool ValidateUserLastName(string lastName)
         {
-            return Link.getLinkText(driver, this.labelUserLastName).Equals(lastName);
+            return Link.getLinkText(this.labelUserLastName).Equals(lastName);
         }
 
         public bool ValidateUserChannel(string channelName)
         {
-            return Link.getLinkText(driver, this.linkChannel).Equals(channelName);
+            return Link.getLinkText(this.linkChannel).Equals(channelName);
         }
         #endregion
     }

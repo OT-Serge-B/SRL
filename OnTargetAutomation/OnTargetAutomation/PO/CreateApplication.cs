@@ -37,65 +37,87 @@ namespace OnTargetAutomation.PO
         By linkPaymentInformation = By.Id("Payment Information");
         By linkBeneficiary = By.Id("Beneficiary");
 
-
-        private IWebDriver driver;
-        public CreateApplication(IWebDriver drv)
+        public CreateApplication()
         {
-            this.driver = drv;
         }
 
         public void CreateNewAppNewUser(TestData data)
         {
             //service method, not to test anything, just to prepare fresh new application for testing
-            Link.clickLink(this.driver, this.leftNavCreateApp);
-            IWait<IWebDriver> wait = new WebDriverWait(driver, TimeSpan.FromSeconds(30.00));
+            Link.clickLink(this.leftNavCreateApp);
+            IWait<IWebDriver> wait = new WebDriverWait(Test.driver, TimeSpan.FromSeconds(30.00));
             wait.Until(ExpectedConditions.ElementIsVisible(this.rbNewClient));
 
-            RadioButton.clickRadioButton(this.driver, this.rbNewClient);
+            RadioButton.clickRadioButton(this.rbNewClient);
             wait.Until(ExpectedConditions.ElementIsVisible(this.textNewClientFirstName));
 
-            TextBox.SetTextInTextBox(this.driver, this.textNewClientFirstName, data.ClientFirstName);
-            TextBox.SetTextInTextBox(this.driver, this.textNewClientLastName, data.ClientLastName);
-            TextBox.SetTextInTextBox(this.driver, this.textNewClientDateOfBirth, data.ClientDateBirth);
-            ComboBox.Select(this.driver, this.cbNewClientGender, data.ClientSex);
-            Button.ClickButton(this.driver, btnDialogNext);
+            TextBox.SetTextInTextBox(this.textNewClientFirstName, data.ClientFirstName);
+            TextBox.SetTextInTextBox(this.textNewClientLastName, data.ClientLastName);
+            TextBox.SetTextInTextBox(this.textNewClientDateOfBirth, data.ClientDateBirth);
+            ComboBox.Select(this.cbNewClientGender, data.ClientSex);
+            Button.ClickButton(btnDialogNext);
 
             wait.Until(ExpectedConditions.ElementIsVisible(this.btnDialogCreate));
-            Button.ClickButton(this.driver, btnDialogCreate);
+            Button.ClickButton(btnDialogCreate);
         }
 
-        public void SetPI(TestData data) 
+        public void OpenPI() 
         {
-            Link.clickLink(this.driver, this.leftNavPaymentInformation);
-            IWait<IWebDriver> wait = new WebDriverWait(driver, TimeSpan.FromSeconds(30.00));
+            Link.clickLink(this.leftNavPaymentInformation);
+            IWait<IWebDriver> wait = new WebDriverWait(Test.driver, TimeSpan.FromSeconds(30.00));
             wait.Until(ExpectedConditions.ElementIsVisible(this.cbCashWithApplication));
         }
-
-        public void ValidateCompleteApplication(TestData data, string[] expectedList)
+        public void OpenCA()
         {
-            IWait<IWebDriver> wait = new WebDriverWait(driver, TimeSpan.FromSeconds(30.00));
-            wait.Until(ExpectedConditions.ElementIsVisible(this.textFirstName));
-            Link.clickLink(this.driver, this.leftNavCompleteApplication);
-
+            IWait<IWebDriver> wait = new WebDriverWait(Test.driver, TimeSpan.FromSeconds(30.00));
+            wait.Until(ExpectedConditions.ElementIsVisible(this.leftNavCompleteApplication));
+            Link.clickLink(this.leftNavCompleteApplication);
             wait.Until(ExpectedConditions.ElementIsVisible(this.linkPaymentInformation));
-
-            string[] actualList = this.getAllSectionItemsInCA(this.linkPaymentInformation, this.linkBeneficiary);
-            Assert.AreEqual(expectedList, actualList);
         }
 
+        public void SetCash(string value)
+        {
+            ComboBox.Select(this.cbCashWithApplication, value);
+            Assert.True(ComboBox.ValidateComboBoxText(this.cbCashWithApplication, value));
+        }
+        public void SetAmount(string value)
+        {
+            TextBox.SetTextInTextBox(this.textCashApplication, value);
+            //while control is focused, it does not contain any differences from entered value 
+            Assert.True(TextBox.ValidateTextBoxText(this.textCashApplication, value));
+        }
+        public void SetPlannedMP(string value)
+        {
+            TextBox.SetTextInTextBox(this.textPlannedModalPremium, value);
+            //while control is focused, it does not contain any differences from entered value 
+            Assert.True(TextBox.ValidateTextBoxText(this.textPlannedModalPremium, value));
+        }
+        public void SetPaymentMethod(string value) {
+            ComboBox.Select(this.cbPaymantMethod, value);
+            Assert.True(ComboBox.ValidateComboBoxText(this.cbPaymantMethod, value));
+        }
+
+        public void ValidateCompleteApplication(string[] expectedList)
+        {
+            //too long - about 4 minutes. Ca 1 minute to go through the whole DOM and find label there
+            //string[] actualList = this.getAllSectionItemsInCA(this.linkPaymentInformation, this.linkBeneficiary);
+            //Assert.AreEqual(expectedList, actualList);
+
+            //faster way - via ValidateGeneralMandatoryFieldsListedOnCA
+        }
         private string[] getAllSectionItemsInCA(By sectionStartLink, By sectionStopLink)
         {
             List<string> list = new List<string>();
-            IList<IWebElement> elements = driver.FindElements(By.CssSelector("*"));
+            IList<IWebElement> elements = Test.driver.FindElements(By.CssSelector("*"));
 
             int start, finish;
             start = -1;
             finish = -1;
                 for (int a = 0; a < elements.Count; a++)
                 {
-                    if (elements[a].GetAttribute("id") == driver.FindElement(sectionStartLink).GetAttribute("id"))
+                    if (elements[a].GetAttribute("id") == Test.driver.FindElement(sectionStartLink).GetAttribute("id"))
                         start = a;
-                    else if (elements[a].GetAttribute("id") == driver.FindElement(sectionStopLink).GetAttribute("id"))
+                    else if (elements[a].GetAttribute("id") == Test.driver.FindElement(sectionStopLink).GetAttribute("id"))
                     {
                         finish = a;
                         break;
@@ -108,27 +130,85 @@ namespace OnTargetAutomation.PO
                 }   
              return list.ToArray();
         }
+        public void ValidateGeneralMandatoryFieldsListedOnCA(bool PlannedMP, bool Cash, bool PaymentMethod, bool PaymentMode, bool Amount)
+        {
+            if (PlannedMP)
+                Assert.True(Label.IsLabelPresented("Planned Modal Premium"));
+            else
+                Assert.False(Label.IsLabelPresented("Planned Modal Premium"));
 
-#region validations
-        //public bool ValidatePageURL(TestSettings settings) {
+            if (Cash)
+                Assert.True(Label.IsLabelPresented("Cash with Application"));
+            else
+                Assert.False(Label.IsLabelPresented("Cash with Application"));
+
+            if (PaymentMethod)
+                Assert.True(Label.IsLabelPresented("Payment Method"));
+            else
+                Assert.False(Label.IsLabelPresented("Payment Method"));
+
+            if (PaymentMode)
+                Assert.True(Label.IsLabelPresented("Payment Mode"));
+            else
+                Assert.False(Label.IsLabelPresented("Payment Mode"));
+
+            if (Amount)
+                Assert.True(Label.IsLabelPresented("Amount"));
+            else
+                Assert.False(Label.IsLabelPresented("Amount"));
+        }
+        public void ValidateGeneralPaymentInformation(string Cash, string Amount, string PaymentMode, string PlannedMP, string PaymentMethod)
+        {
+            //click PI to get possible focus off any text control
+            this.OpenPI();
+            //Cash
+            Assert.True(ComboBox.ValidateComboBoxIsDisplayed(this.cbCashWithApplication));
+            Assert.True(ComboBox.ValidateComboBoxIsEnabled(this.cbCashWithApplication));
+            Assert.True(ComboBox.ValidateComboBoxIsMandatory(this.cbCashWithApplication));
+            Assert.True(ComboBox.ValidateComboBoxText(this.cbCashWithApplication, Cash));
+            //PaymentMode
+            Assert.True(ComboBox.ValidateComboBoxIsDisplayed(this.cbPaymantMode));
+            Assert.True(ComboBox.ValidateComboBoxIsEnabled(this.cbPaymantMode));
+            Assert.True(ComboBox.ValidateComboBoxIsMandatory(this.cbPaymantMode));
+            Assert.True(ComboBox.ValidateComboBoxText(this.cbPaymantMode, PaymentMode));
+
+            //PaymentMethod
+            Assert.True(ComboBox.ValidateComboBoxIsDisplayed(this.cbPaymantMethod));
+            Assert.True(ComboBox.ValidateComboBoxIsEnabled(this.cbPaymantMethod));
+            Assert.True(ComboBox.ValidateComboBoxIsMandatory(this.cbPaymantMethod));
+            Assert.True(ComboBox.ValidateComboBoxText(this.cbPaymantMethod, PaymentMethod));
             
-        //    return driver.Url.Contains(settings.Environment + "LifePortraits.aspx");
-        //}
+            //PlannedModalPremium
+            Assert.True(TextBox.ValidateTextBoxIsDisplayed(this.textPlannedModalPremium));
+            Assert.True(TextBox.ValidateTextBoxIsEnabled(this.textPlannedModalPremium));
+            Assert.True(TextBox.ValidateTextBoxIsMandatory(this.textPlannedModalPremium));
+            Assert.True(TextBox.ValidateTextBoxAmount(this.textPlannedModalPremium, PlannedMP));
 
-        //public bool ValidateUserFirstName(string firstName)
-        //{
-        //    return Link.getLinkText(driver, this.labelUserFirstName).Equals(firstName);
-        //}
+            //Amount
+            Assert.True(TextBox.ValidateTextBoxIsDisplayed(this.textCashApplication));
+            Assert.True(TextBox.ValidateTextBoxAmount(this.textCashApplication, Amount));
+            if (Cash != " " && Cash != "No")
+            {
+                Assert.True(TextBox.ValidateTextBoxIsEnabled(this.textCashApplication));
+                Assert.True(TextBox.ValidateTextBoxIsMandatory(this.textCashApplication));
+            }
+            else
+            {
+                Assert.False(TextBox.ValidateTextBoxIsEnabled(this.textCashApplication));
+                Assert.False(TextBox.ValidateTextBoxIsMandatory(this.textCashApplication));
+            }
+        }
 
-        //public bool ValidateUserLastName(string lastName)
-        //{
-        //    return Link.getLinkText(driver, this.labelUserLastName).Equals(lastName);
-        //}
+        public void ValidateCardPaymentInformation(string cardType, string AccNo, string Expired, string Name)
+        {
+            
+        }
 
-        //public bool ValidateUserChannel(string channelName)
-        //{
-        //    return Link.getLinkText(driver, this.linkChannel).Equals(channelName);
-        //}
-#endregion
+        public void ValidateCardMandatoryFieldsListedOnCA(bool AccNo, bool Expired, bool Name) 
+        { }
+        public bool ValidateBankDraftPaymentInformation()
+        {
+            return true;
+        }
     }
 }

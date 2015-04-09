@@ -5,9 +5,9 @@ namespace OnTargetAutomation
 {
     public class RadioButton
     {
-        public static void clickRadioButton(IWebDriver driver, By by)
+        public static void clickRadioButton(By by)
         {
-            driver.FindElement(by).Click();
+            Test.driver.FindElement(by).Click();
         }
     }
 }
