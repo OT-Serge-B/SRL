@@ -360,6 +360,28 @@ namespace OnTargetAutomation
 
 
             }
+            [Test]
+            public void T0006_CompleteApplicationForBillPaymentMethod()
+            {
+                //step 1 - login
+                driver.Navigate().GoToUrl(settingsObj.Environment);
+                this.T0001_TestUserLogin();
+                //step 2 - go to PI and validate
+                PO.CA appPage = new PO.CA();
+                PO.PI piPage = new PO.PI();
+                dataObj = new TestData("CompleteApplicationForEmprtyPaymentInformation");
+                appPage.CreateNewAppNewUser(dataObj);
+                piPage.OpenPI();
+                //empty checkboxes = " "; empty textboxes = ""
+                piPage.ValidateGeneralPaymentInformation(" ", "", " ", "", " ");
+                //step 3 - Select DirectBilling
+                piPage.SetPaymentMethod("Direct Billing");
+                piPage.ValidateGeneralPaymentInformation(" ", "", " ", "", "Direct Billing");
+                //step 4 - go to CA 
+                appPage.OpenCA();
+                //step 5 -  validate CA - cash disappears 
+                appPage.ValidateGeneralMandatoryFieldsListedOnCA(true, true, false, true, false);
+            }
         }
     
 }
