@@ -8,7 +8,7 @@ using NUnit.Framework;
 
 namespace OnTargetAutomation.PO
 {
-    public class CreateApplication
+    public class CA
     {
         //http://stoneriverdev.lifeportraits.com/LifePortraits.aspx#
         By leftNavCreateApp = By.Id("CreateApplication_text");
@@ -21,81 +21,47 @@ namespace OnTargetAutomation.PO
         By cbNewClientGender = By.Id("NewClientGender");
         By btnDialogNext = By.Id("srcore_widget_ModalDialog_0_button_ok_label");
         By btnDialogCreate = By.Id("srcore_widget_ModalDialog_1_button_ok_label");
-        //application screen
+        //application first screen
         By textFirstName = By.Id("FirstName");
         By textLastName = By.Id("LastName");
         //leftNav for application
         By leftNavPaymentInformation = By.Id("paymentInformation_text");
         By leftNavCompleteApplication = By.Id("completeApplication_text");
-        //PI
-        By cbCashWithApplication = By.Id("cashApplication");
-        By textCashApplication = By.Id("amount");
-        By textPlannedModalPremium = By.Id("plannedModalPremium");
-        By cbPaymantMode = By.Id("paymentMode");
-        By cbPaymantMethod = By.Id("paymentMethod");
         //CA
         By linkPaymentInformation = By.Id("Payment Information");
         By linkBeneficiary = By.Id("Beneficiary");
 
-        public CreateApplication()
+        public CA()
         {
         }
 
         public void CreateNewAppNewUser(TestData data)
         {
+            WebDriverUtils.WaitForPage();
             //service method, not to test anything, just to prepare fresh new application for testing
             Link.clickLink(this.leftNavCreateApp);
-            IWait<IWebDriver> wait = new WebDriverWait(Test.driver, TimeSpan.FromSeconds(30.00));
-            wait.Until(ExpectedConditions.ElementIsVisible(this.rbNewClient));
+            WebDriverUtils.WaitForPage();
 
             RadioButton.clickRadioButton(this.rbNewClient);
-            wait.Until(ExpectedConditions.ElementIsVisible(this.textNewClientFirstName));
+            WebDriverUtils.WaitForPage();
 
             TextBox.SetTextInTextBox(this.textNewClientFirstName, data.ClientFirstName);
             TextBox.SetTextInTextBox(this.textNewClientLastName, data.ClientLastName);
             TextBox.SetTextInTextBox(this.textNewClientDateOfBirth, data.ClientDateBirth);
             ComboBox.Select(this.cbNewClientGender, data.ClientSex);
             Button.ClickButton(btnDialogNext);
-
-            wait.Until(ExpectedConditions.ElementIsVisible(this.btnDialogCreate));
+            WebDriverUtils.WaitForPage();
             Button.ClickButton(btnDialogCreate);
-        }
-
-        public void OpenPI() 
-        {
-            Link.clickLink(this.leftNavPaymentInformation);
-            IWait<IWebDriver> wait = new WebDriverWait(Test.driver, TimeSpan.FromSeconds(30.00));
-            wait.Until(ExpectedConditions.ElementIsVisible(this.cbCashWithApplication));
         }
         public void OpenCA()
         {
+            WebDriverUtils.WaitForPage();
             IWait<IWebDriver> wait = new WebDriverWait(Test.driver, TimeSpan.FromSeconds(30.00));
             wait.Until(ExpectedConditions.ElementIsVisible(this.leftNavCompleteApplication));
             Link.clickLink(this.leftNavCompleteApplication);
             wait.Until(ExpectedConditions.ElementIsVisible(this.linkPaymentInformation));
         }
 
-        public void SetCash(string value)
-        {
-            ComboBox.Select(this.cbCashWithApplication, value);
-            Assert.True(ComboBox.ValidateComboBoxText(this.cbCashWithApplication, value));
-        }
-        public void SetAmount(string value)
-        {
-            TextBox.SetTextInTextBox(this.textCashApplication, value);
-            //while control is focused, it does not contain any differences from entered value 
-            Assert.True(TextBox.ValidateTextBoxText(this.textCashApplication, value));
-        }
-        public void SetPlannedMP(string value)
-        {
-            TextBox.SetTextInTextBox(this.textPlannedModalPremium, value);
-            //while control is focused, it does not contain any differences from entered value 
-            Assert.True(TextBox.ValidateTextBoxText(this.textPlannedModalPremium, value));
-        }
-        public void SetPaymentMethod(string value) {
-            ComboBox.Select(this.cbPaymantMethod, value);
-            Assert.True(ComboBox.ValidateComboBoxText(this.cbPaymantMethod, value));
-        }
 
         public void ValidateCompleteApplication(string[] expectedList)
         {
@@ -157,58 +123,22 @@ namespace OnTargetAutomation.PO
             else
                 Assert.False(Label.IsLabelPresented("Amount"));
         }
-        public void ValidateGeneralPaymentInformation(string Cash, string Amount, string PaymentMode, string PlannedMP, string PaymentMethod)
-        {
-            //click PI to get possible focus off any text control
-            this.OpenPI();
-            //Cash
-            Assert.True(ComboBox.ValidateComboBoxIsDisplayed(this.cbCashWithApplication));
-            Assert.True(ComboBox.ValidateComboBoxIsEnabled(this.cbCashWithApplication));
-            Assert.True(ComboBox.ValidateComboBoxIsMandatory(this.cbCashWithApplication));
-            Assert.True(ComboBox.ValidateComboBoxText(this.cbCashWithApplication, Cash));
-            //PaymentMode
-            Assert.True(ComboBox.ValidateComboBoxIsDisplayed(this.cbPaymantMode));
-            Assert.True(ComboBox.ValidateComboBoxIsEnabled(this.cbPaymantMode));
-            Assert.True(ComboBox.ValidateComboBoxIsMandatory(this.cbPaymantMode));
-            Assert.True(ComboBox.ValidateComboBoxText(this.cbPaymantMode, PaymentMode));
-
-            //PaymentMethod
-            Assert.True(ComboBox.ValidateComboBoxIsDisplayed(this.cbPaymantMethod));
-            Assert.True(ComboBox.ValidateComboBoxIsEnabled(this.cbPaymantMethod));
-            Assert.True(ComboBox.ValidateComboBoxIsMandatory(this.cbPaymantMethod));
-            Assert.True(ComboBox.ValidateComboBoxText(this.cbPaymantMethod, PaymentMethod));
-            
-            //PlannedModalPremium
-            Assert.True(TextBox.ValidateTextBoxIsDisplayed(this.textPlannedModalPremium));
-            Assert.True(TextBox.ValidateTextBoxIsEnabled(this.textPlannedModalPremium));
-            Assert.True(TextBox.ValidateTextBoxIsMandatory(this.textPlannedModalPremium));
-            Assert.True(TextBox.ValidateTextBoxAmount(this.textPlannedModalPremium, PlannedMP));
-
-            //Amount
-            Assert.True(TextBox.ValidateTextBoxIsDisplayed(this.textCashApplication));
-            Assert.True(TextBox.ValidateTextBoxAmount(this.textCashApplication, Amount));
-            if (Cash != " " && Cash != "No")
-            {
-                Assert.True(TextBox.ValidateTextBoxIsEnabled(this.textCashApplication));
-                Assert.True(TextBox.ValidateTextBoxIsMandatory(this.textCashApplication));
-            }
-            else
-            {
-                Assert.False(TextBox.ValidateTextBoxIsEnabled(this.textCashApplication));
-                Assert.False(TextBox.ValidateTextBoxIsMandatory(this.textCashApplication));
-            }
-        }
-
-        public void ValidateCardPaymentInformation(string cardType, string AccNo, string Expired, string Name)
-        {
-            
-        }
-
         public void ValidateCardMandatoryFieldsListedOnCA(bool AccNo, bool Expired, bool Name) 
-        { }
-        public bool ValidateBankDraftPaymentInformation()
         {
-            return true;
+            if (AccNo)
+                Assert.True(Label.IsLabelPresented("Account Number"));
+            else
+                Assert.False(Label.IsLabelPresented("Account Number"));
+
+            if (Expired)
+                Assert.True(Label.IsLabelPresented("Expiration Date"));
+            else
+                Assert.False(Label.IsLabelPresented("Expiration Date"));
+
+            if (Name)
+                Assert.True(Label.IsLabelPresented("Name on Card"));
+            else
+                Assert.False(Label.IsLabelPresented("Name on Card"));
         }
     }
 }

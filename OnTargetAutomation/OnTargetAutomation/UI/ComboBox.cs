@@ -7,12 +7,15 @@ namespace OnTargetAutomation
     {
         public static void Select(By by, string itemTextToBeSelected)
         {
+            //WebDriverUtils.WaitForPage();
             Test.driver.FindElement(by).Click();
+            //WebDriverUtils.WaitForPage();
             Test.driver.FindElement(By.XPath("//td[contains(.,'" + itemTextToBeSelected + "')]")).Click();
         }
 
         public static bool ValidateComboBoxIsDisplayed(By by)
         {
+            WebDriverUtils.WaitForPage();
             try
             {
                 return Test.driver.FindElement(by).Displayed;
@@ -25,6 +28,7 @@ namespace OnTargetAutomation
 
         public static bool ValidateComboBoxIsEnabled(By by)
         {
+            WebDriverUtils.WaitForPage();
             try
             {
                 return Test.driver.FindElement(by).Enabled;
@@ -37,6 +41,7 @@ namespace OnTargetAutomation
 
         public static bool ValidateComboBoxIsMandatory(By by)
         {
+            //WebDriverUtils.WaitForPage();
             string state = Test.driver.FindElement(by).GetAttribute("aria-required");
             if (state == "false")
                 return false;
@@ -48,6 +53,7 @@ namespace OnTargetAutomation
 
         public static bool ValidateComboBoxText(By by, string Text)
         {
+            //WebDriverUtils.WaitForPage();
             return Test.driver.FindElement(by).Text.Equals(Text);
         }
     }

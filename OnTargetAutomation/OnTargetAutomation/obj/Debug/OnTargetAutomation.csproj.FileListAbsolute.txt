@@ -13,4 +13,4 @@ C:\Users\sbaglyuk\Documents\Visual Studio 2013\Projects\OnTargetAutomation\OnTar
 C:\Users\sbaglyuk\Documents\Visual Studio 2013\Projects\OnTargetAutomation\OnTargetAutomation\bin\Debug\Resources\Settings.xml
 C:\Users\sbaglyuk\Documents\Visual Studio 2013\Projects\OnTargetAutomation\OnTargetAutomation\obj\Debug\OnTargetAutomation.Properties.Resources.resources
 C:\Users\sbaglyuk\Documents\Visual Studio 2013\Projects\OnTargetAutomation\OnTargetAutomation\obj\Debug\OnTargetAutomation.csproj.GenerateResource.Cache
-C:\Users\sbaglyuk\Documents\Visual Studio 2013\Projects\OnTargetAutomation\OnTargetAutomation\obj\Debug\OnTargetAutomation.csprojResolveAssemblyReference.cache
+C:\Users\sbaglyuk\documents\visual studio 2013\Projects\OnTargetAutomation\OnTargetAutomation\obj\Debug\OnTargetAutomation.csprojResolveAssemblyReference.cache

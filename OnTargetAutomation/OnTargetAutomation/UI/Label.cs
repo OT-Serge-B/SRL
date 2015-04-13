@@ -13,7 +13,7 @@ namespace OnTargetAutomation
             }
             catch (NoSuchElementException e)
             {
-                Console.WriteLine("Unable to locate " + labelText);
+                //Console.WriteLine("Unable to locate " + labelText);
                 return false;
             }
         }

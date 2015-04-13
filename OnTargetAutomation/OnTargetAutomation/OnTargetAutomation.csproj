@@ -70,6 +70,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="PO\PaymentInformation.cs" />
     <Compile Include="PO\HomePage.cs" />
     <Compile Include="PO\CreateApplication.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
@@ -77,6 +78,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <Compile Include="UI\WebDriverUtils.cs" />
     <Compile Include="UI\ComboBox.cs" />
     <Compile Include="UI\Label.cs" />
     <Compile Include="WebDriverFacory.cs" />
