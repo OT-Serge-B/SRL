@@ -18,11 +18,24 @@ namespace OnTargetAutomation.PO
         By textCashApplication = By.Id("amount");
         By textPlannedModalPremium = By.Id("plannedModalPremium");
         By cbPaymantMode = By.Id("paymentMode");
+        By cbPaymantModeExpanded = By.Id("paymentMode_dropdown");
         By cbPaymantMethod = By.Id("paymentMethod");
+        By cbPaymantMethodExpanded = By.Id("paymentMethod_dropdown");
+
         By textCreditCardNo = By.Id("creditCardNumber");
         By textCreditCardExpired = By.Id("creditCardExpDate");
         By textCardholderName = By.Id("nameOnCard");
         By cbCreditCardType = By.Id("creditCardType");
+        By cbCreditCardTypeExpanded = By.Id("creditCardType_dropdown");
+
+        By textFinancialInstitutionName = By.Id("institutionName");
+        By textRoutingNumber = By.Id("routingNumber");
+        By textAccountNumber = By.Id("accountNumber");
+        By textBranch = By.Id("branch");
+        By cbAccountType = By.Id("accountType");
+        By cbAccountTypeExpanded = By.Id("accountType_dropdown");
+        By cbDraftDay = By.Id("paymentDay");
+        By cbDraftDayExpanded = By.Id("paymentDay_dropdown");
 
         public void OpenPI() 
         {
@@ -52,10 +65,10 @@ namespace OnTargetAutomation.PO
             ComboBox.Select(this.cbPaymantMethod, value);
             Assert.True(ComboBox.ValidateComboBoxText(this.cbPaymantMethod, value));
         }
+
         public void SetCardNumber(string value)
         {
             TextBox.SetTextInTextBox(this.textCreditCardNo, value);
-            Assert.True(TextBox.ValidateTextBoxText(this.textCreditCardNo, value));
         }
         public void SetCardholder(string value)
         {
@@ -71,7 +84,74 @@ namespace OnTargetAutomation.PO
             ComboBox.Select(this.cbCreditCardType, value);
             Assert.True(ComboBox.ValidateComboBoxText(this.cbCreditCardType, value));
         }
-        
+
+        public void SetFinancialInstitutionName(string value)
+        {
+            TextBox.SetTextInTextBox(this.textFinancialInstitutionName, value);
+            Assert.True(TextBox.ValidateTextBoxText(this.textFinancialInstitutionName, value));
+        }
+        public void SetRoutingNumber(string value)
+        {
+            TextBox.SetTextInTextBox(this.textRoutingNumber, value);
+            Assert.True(TextBox.ValidateTextBoxText(this.textRoutingNumber, value));
+        }
+        public void SetAccountNumber(string value)
+        {
+            TextBox.SetTextInTextBox(this.textAccountNumber, value);
+            Assert.True(TextBox.ValidateTextBoxText(this.textAccountNumber, value));
+        }
+        public void SetBranch(string value)
+        {
+            TextBox.SetTextInTextBox(this.textBranch, value);
+            Assert.True(TextBox.ValidateTextBoxText(this.textBranch, value));
+        }
+        public void SetAccountType(string value)
+        {
+            ComboBox.Select(this.cbAccountType, value);
+            Assert.True(ComboBox.ValidateComboBoxText(this.cbAccountType, value));
+        }
+        public void SetDraftDay(string value)
+        {
+            ComboBox.Select(this.cbDraftDay, value);
+            Assert.True(ComboBox.ValidateComboBoxText(this.cbDraftDay, value));
+        }
+
+
+        public void ValidateCashAmount(string Cash, string Amount)
+        {
+            //click PI to get possible focus off any text control
+            this.OpenPI();
+            //Cash
+            Assert.True(ComboBox.ValidateComboBoxIsDisplayed(this.cbCashWithApplication));
+            Assert.True(ComboBox.ValidateComboBoxIsEnabled(this.cbCashWithApplication));
+            Assert.True(ComboBox.ValidateComboBoxIsMandatory(this.cbCashWithApplication));
+            Assert.True(ComboBox.ValidateComboBoxText(this.cbCashWithApplication, Cash));
+            
+
+            //Amount
+            Assert.True(TextBox.ValidateTextBoxIsDisplayed(this.textCashApplication));
+            Assert.True(TextBox.ValidateTextBoxAmount(this.textCashApplication, Amount));
+            if (Cash != string.Empty && Cash != "No")
+            {
+                Assert.True(TextBox.ValidateTextBoxIsEnabled(this.textCashApplication));
+                Assert.True(TextBox.ValidateTextBoxIsMandatory(this.textCashApplication));
+            }
+            else
+            {
+                Assert.False(TextBox.ValidateTextBoxIsEnabled(this.textCashApplication));
+                Assert.False(TextBox.ValidateTextBoxIsMandatory(this.textCashApplication));
+            }
+        }
+        public void ValidatePlannedModalPremium(string PlannedMP)
+        {
+            //click PI to get possible focus off any text control
+            this.OpenPI(); 
+            //then - validate
+            Assert.True(TextBox.ValidateTextBoxIsDisplayed(this.textPlannedModalPremium));
+            Assert.True(TextBox.ValidateTextBoxIsEnabled(this.textPlannedModalPremium));
+            Assert.True(TextBox.ValidateTextBoxIsMandatory(this.textPlannedModalPremium));
+            Assert.True(TextBox.ValidateTextBoxAmount(this.textPlannedModalPremium, PlannedMP));
+        }
 
         public void ValidateGeneralPaymentInformation(string Cash, string Amount, string PaymentMode, string PlannedMP, string PaymentMethod)
         {
@@ -114,36 +194,80 @@ namespace OnTargetAutomation.PO
                 Assert.False(TextBox.ValidateTextBoxIsMandatory(this.textCashApplication));
             }
         }
-        public void ValidateCardPaymentInformation(string cardType, string CardNo, string Expired, string CardholderName)
+        public void ValidateCardPaymentInformation(string PaymentMethod, string cardType, string CardNo, string Expired, string CardholderName)
         {
-            //cardtype
-            Assert.True(ComboBox.ValidateComboBoxIsDisplayed(this.cbCreditCardType));
-            Assert.True(ComboBox.ValidateComboBoxIsEnabled(this.cbCreditCardType));
-            Assert.True(ComboBox.ValidateComboBoxIsMandatory(this.cbCreditCardType));
-            Assert.True(ComboBox.ValidateComboBoxText(this.cbCreditCardType, cardType));
+            //click PI to get possible focus off any text control
+            this.OpenPI();
+            //the - validate PaymentMethod
+            ValidatePaymentMethod(PaymentMethod);
 
-            //cardNo
-            Assert.True(TextBox.ValidateTextBoxIsDisplayed(this.textCreditCardNo));
-            Assert.True(TextBox.ValidateTextBoxIsEnabled(this.textCreditCardNo));
-            Assert.True(TextBox.ValidateTextBoxIsMandatory(this.textCreditCardNo));
-            Assert.True(TextBox.ValidateTextBoxText(this.textCreditCardNo, CardNo));
+            if (PaymentMethod == "Credit Card")
+            {
+                Assert.True(ComboBox.ValidateComboBoxText(this.cbPaymantMethod, PaymentMethod));
+                //cardtype
+                Assert.True(ComboBox.ValidateComboBoxIsDisplayed(this.cbCreditCardType));
+                Assert.True(ComboBox.ValidateComboBoxIsEnabled(this.cbCreditCardType));
+                Assert.True(ComboBox.ValidateComboBoxIsMandatory(this.cbCreditCardType));
+                Assert.True(ComboBox.ValidateComboBoxText(this.cbCreditCardType, cardType));
 
-            //expired
-            Assert.True(TextBox.ValidateTextBoxIsDisplayed(this.textCreditCardExpired));
-            Assert.True(TextBox.ValidateTextBoxIsEnabled(this.textCreditCardExpired));
-            Assert.True(TextBox.ValidateTextBoxIsMandatory(this.textCreditCardExpired));
-            Assert.True(TextBox.ValidateTextBoxText(this.textCreditCardExpired, Expired));
+                //cardNo
+                Assert.True(TextBox.ValidateTextBoxIsDisplayed(this.textCreditCardNo));
+                Assert.True(TextBox.ValidateTextBoxIsEnabled(this.textCreditCardNo));
+                Assert.True(TextBox.ValidateTextBoxIsMandatory(this.textCreditCardNo));
+                Assert.True(TextBox.ValidateTextBoxText(this.textCreditCardNo, CardNo));
 
-            //cardholderName
-            Assert.True(TextBox.ValidateTextBoxIsDisplayed(this.textCardholderName));
-            Assert.True(TextBox.ValidateTextBoxIsEnabled(this.textCardholderName));
-            Assert.True(TextBox.ValidateTextBoxIsMandatory(this.textCardholderName));
-            Assert.True(TextBox.ValidateTextBoxText(this.textCardholderName, CardholderName));
+                //expired
+                Assert.True(TextBox.ValidateTextBoxIsDisplayed(this.textCreditCardExpired));
+                Assert.True(TextBox.ValidateTextBoxIsEnabled(this.textCreditCardExpired));
+                Assert.True(TextBox.ValidateTextBoxIsMandatory(this.textCreditCardExpired));
+                Assert.True(TextBox.ValidateTextBoxText(this.textCreditCardExpired, Expired));
 
+                //cardholderName
+                Assert.True(TextBox.ValidateTextBoxIsDisplayed(this.textCardholderName));
+                Assert.True(TextBox.ValidateTextBoxIsEnabled(this.textCardholderName));
+                Assert.True(TextBox.ValidateTextBoxIsMandatory(this.textCardholderName));
+                Assert.True(TextBox.ValidateTextBoxText(this.textCardholderName, CardholderName));
+            }
         }
-        public bool ValidateBankDraftPaymentInformation()
+        public void ValidatePaymentMethod(string PaymentMethod) 
         {
-            return true;
+            Assert.True(ComboBox.ValidateComboBoxIsDisplayed(this.cbPaymantMethod));
+            Assert.True(ComboBox.ValidateComboBoxIsEnabled(this.cbPaymantMethod));
+            Assert.True(ComboBox.ValidateComboBoxIsMandatory(this.cbPaymantMethod));
+            Assert.True(ComboBox.ValidateComboBoxText(this.cbPaymantMethod, PaymentMethod));
+        }
+        public void ValidateBankDraftPaymentInformation(string FinancialInstitutionName, string RoutingNumber, string Branch, string AccountNumber, string DraftDay, string AccountType)
+        {
+            //FinancialInstitutionName
+            Assert.True(TextBox.ValidateTextBoxIsDisplayed(this.textFinancialInstitutionName));
+            Assert.True(TextBox.ValidateTextBoxIsEnabled(this.textFinancialInstitutionName));
+            Assert.True(TextBox.ValidateTextBoxIsMandatory(this.textFinancialInstitutionName));
+            Assert.True(TextBox.ValidateTextBoxText(this.textFinancialInstitutionName, FinancialInstitutionName));
+            //RoutingNumber
+            Assert.True(TextBox.ValidateTextBoxIsDisplayed(this.textRoutingNumber));
+            Assert.True(TextBox.ValidateTextBoxIsEnabled(this.textRoutingNumber));
+            Assert.True(TextBox.ValidateTextBoxIsMandatory(this.textRoutingNumber));
+            Assert.True(TextBox.ValidateTextBoxText(this.textRoutingNumber, RoutingNumber));
+            //Branch
+            Assert.True(TextBox.ValidateTextBoxIsDisplayed(this.textBranch));
+            Assert.True(TextBox.ValidateTextBoxIsEnabled(this.textBranch));
+            Assert.False(TextBox.ValidateTextBoxIsMandatory(this.textBranch));
+            Assert.True(TextBox.ValidateTextBoxText(this.textBranch, Branch));
+            //AccountNumber
+            Assert.True(TextBox.ValidateTextBoxIsDisplayed(this.textAccountNumber));
+            Assert.True(TextBox.ValidateTextBoxIsEnabled(this.textAccountNumber));
+            Assert.True(TextBox.ValidateTextBoxIsMandatory(this.textAccountNumber));
+            Assert.True(TextBox.ValidateTextBoxText(this.textAccountNumber, AccountNumber));
+            //DraftDay
+            Assert.True(ComboBox.ValidateComboBoxIsDisplayed(this.cbDraftDay));
+            Assert.True(ComboBox.ValidateComboBoxIsEnabled(this.cbDraftDay));
+            Assert.False(ComboBox.ValidateComboBoxIsMandatory(this.cbDraftDay));
+            Assert.True(ComboBox.ValidateComboBoxText(this.cbDraftDay, DraftDay));
+            //AccountType
+            Assert.True(ComboBox.ValidateComboBoxIsDisplayed(this.cbAccountType));
+            Assert.True(ComboBox.ValidateComboBoxIsEnabled(this.cbAccountType));
+            Assert.True(ComboBox.ValidateComboBoxIsMandatory(this.cbAccountType));
+            Assert.True(ComboBox.ValidateComboBoxText(this.cbAccountType, AccountType));
         }
     }
 }

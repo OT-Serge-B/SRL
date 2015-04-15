@@ -98,47 +98,25 @@ namespace OnTargetAutomation.PO
         }
         public void ValidateGeneralMandatoryFieldsListedOnCA(bool PlannedMP, bool Cash, bool PaymentMethod, bool PaymentMode, bool Amount)
         {
-            if (PlannedMP)
-                Assert.True(Label.IsLabelPresented("Planned Modal Premium"));
-            else
-                Assert.False(Label.IsLabelPresented("Planned Modal Premium"));
-
-            if (Cash)
-                Assert.True(Label.IsLabelPresented("Cash with Application"));
-            else
-                Assert.False(Label.IsLabelPresented("Cash with Application"));
-
-            if (PaymentMethod)
-                Assert.True(Label.IsLabelPresented("Payment Method"));
-            else
-                Assert.False(Label.IsLabelPresented("Payment Method"));
-
-            if (PaymentMode)
-                Assert.True(Label.IsLabelPresented("Payment Mode"));
-            else
-                Assert.False(Label.IsLabelPresented("Payment Mode"));
-
-            if (Amount)
-                Assert.True(Label.IsLabelPresented("Amount"));
-            else
-                Assert.False(Label.IsLabelPresented("Amount"));
+            Assert.AreEqual(PlannedMP, Label.IsLabelPresented("Planned Modal Premium"));
+            Assert.AreEqual(Cash, Label.IsLabelPresented("Cash with Application"));
+            Assert.AreEqual(PaymentMethod, Label.IsLabelPresented("Payment Method"));
+            Assert.AreEqual(PaymentMode, Label.IsLabelPresented("Payment Mode"));
+            Assert.AreEqual(Amount, Label.IsLabelPresented("Amount"));
         }
         public void ValidateCardMandatoryFieldsListedOnCA(bool AccNo, bool Expired, bool Name) 
         {
-            if (AccNo)
-                Assert.True(Label.IsLabelPresented("Account Number"));
-            else
-                Assert.False(Label.IsLabelPresented("Account Number"));
-
-            if (Expired)
-                Assert.True(Label.IsLabelPresented("Expiration Date"));
-            else
-                Assert.False(Label.IsLabelPresented("Expiration Date"));
-
-            if (Name)
-                Assert.True(Label.IsLabelPresented("Name on Card"));
-            else
-                Assert.False(Label.IsLabelPresented("Name on Card"));
+            Assert.AreEqual(AccNo, Label.IsLabelPresented("Account Number"));
+            Assert.AreEqual(Expired, Label.IsLabelPresented("Expiration Date"));
+            Assert.AreEqual(Name, Label.IsLabelPresented("Name on Card"));
         }
+        public void ValidateBankDraftMandatoryFieldsListedOnCA(bool RoutingNumber, bool AccountNumber, bool FinancialInstitutionName)
+        {
+            Assert.AreEqual(AccountNumber, Label.IsLabelPresented("Account Number"));
+            Assert.AreEqual(RoutingNumber, Label.IsLabelPresented("Routing Number"));
+            Assert.AreEqual(FinancialInstitutionName, Label.IsLabelPresented("Financial Institution Name"));
+        }
+
+
     }
 }

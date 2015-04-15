@@ -14,20 +14,20 @@ namespace OnTargetAutomation
 
         public static bool ValidateTextBoxText(By by, string Text)
         {
-            //WebDriverUtils.WaitForPage();
+            WebDriverUtils.WaitForPage();
             return Test.driver.FindElement(by).GetAttribute("value").Equals(Text);
         }
 
         public static bool ValidateTextBoxAmount(By by, string Text)
         {
-            //WebDriverUtils.WaitForPage();
+            WebDriverUtils.WaitForPage();
             if (Text == "") return Test.driver.FindElement(by).GetAttribute("value").Equals(Text);
             else return Test.driver.FindElement(by).GetAttribute("value").Equals("$" + Text + ".00");
         }
 
         public static bool ValidateTextBoxIsDisplayed(By by)
         {
-            //WebDriverUtils.WaitForPage();
+            WebDriverUtils.WaitForPage();
             try
             {
                 return Test.driver.FindElement(by).Displayed;
@@ -40,7 +40,7 @@ namespace OnTargetAutomation
 
         public static bool ValidateTextBoxIsEnabled(By by)
         {
-            //WebDriverUtils.WaitForPage();
+            WebDriverUtils.WaitForPage();
             try
             {
                 return Test.driver.FindElement(by).Enabled;
@@ -53,9 +53,9 @@ namespace OnTargetAutomation
 
         public static bool ValidateTextBoxIsMandatory(By by)
         {
-            //WebDriverUtils.WaitForPage();
+            WebDriverUtils.WaitForPage();
             string state = Test.driver.FindElement(by).GetAttribute("aria-required");
-            if (state == "false")
+            if (state == "false" || state == null)
                 return false;
             else if (state == "true")
                 return true;

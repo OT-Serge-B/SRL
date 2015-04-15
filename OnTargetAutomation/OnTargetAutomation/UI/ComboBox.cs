@@ -1,5 +1,7 @@
 ﻿using System;
+using OpenQA.Selenium.Support.UI;
 using OpenQA.Selenium;
+using System.Collections.Generic;
 
 namespace OnTargetAutomation
 {
@@ -43,7 +45,7 @@ namespace OnTargetAutomation
         {
             //WebDriverUtils.WaitForPage();
             string state = Test.driver.FindElement(by).GetAttribute("aria-required");
-            if (state == "false")
+            if (state == "false" || state == null)
                 return false;
             else if (state == "true")
                 return true;
@@ -53,8 +55,22 @@ namespace OnTargetAutomation
 
         public static bool ValidateComboBoxText(By by, string Text)
         {
-            //WebDriverUtils.WaitForPage();
-            return Test.driver.FindElement(by).Text.Equals(Text);
+            if (Text != string.Empty)
+                return Test.driver.FindElement(by).Text.Equals(Text);
+            else
+                return Test.driver.FindElement(by).Text.Equals(" ");
+        }
+
+        public static bool ValidateComboBoxContent(By expandedBy, List<string> expectedItems)
+        {
+            var dropdown = Test.driver.FindElement(expandedBy);
+            List<string> actualList = new List<string>();
+            IReadOnlyCollection<IWebElement> list =  dropdown.FindElements(By.ClassName("dijitMenuItemLabel"));
+            foreach (var l in list)
+            {
+                Console.WriteLine(l.Text);
+            }
+            return true;
         }
     }
 }
